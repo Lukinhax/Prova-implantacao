@@ -16,7 +16,7 @@ services:
     networks:
       - empresa_networks
     command:
-      postegres -c listen_address='*'
+      postgres -c listen_address='*'
                 -c max_connections=100
                 -c shared_buffers=256mb
   
