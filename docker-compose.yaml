@@ -1,0 +1,47 @@
+services:
+  postegres:
+    image: postgres:15
+    container_name: empresa_postgres
+    restart: always
+    environment:
+      DB_NAME: aval_acao_crud
+      DB_USER: postgres
+      DB_PASS: postgres123
+      DB_HOST_AUTH_METHOD: md5
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql.sql:/docker-entrypoint-initdb.d/sql.sql
+    networks:
+      - empresa_networks
+    command:
+      postegres -c listen_address='*'
+                -c max_connections=100
+                -c shared_buffers=256mb
+  
+  
+  web:
+    image: php:8.2-apache
+    container_name: empresa_web
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - postgres
+    networks:
+      - empresa_networks
+    environment:
+      DB_NAME: aval_acao_crud
+      DB_USER: postgres
+      DB_PASS: postgres123
+      DB_HOST: db
+    command: 
+      bash -c "
+      apt -get update &&
+      apt -get install -y bilepq -dev &&
+      docker -php-ext-install pdo pdo_pgsql &&
+      apache2-foreground
+      "
