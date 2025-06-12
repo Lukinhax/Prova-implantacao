@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:15
     container_name: empresa_postgres
-    restart: always
+
     environment:
       DB_NAME: aval_acao_crud
       DB_USER: postgres
@@ -24,7 +24,6 @@ services:
   web:
     image: php:8.2-apache
     container_name: empresa_web
-    restart: always
     ports:
       - "80:80"
     volumes:
@@ -38,17 +37,10 @@ services:
       DB_USER: postgres
       DB_PASS: postgres123
       DB_HOST: db
-    command: 
-      bash -c "
-      apt -get update &&
-      apt -get install -y bilepq -dev &&
-      docker -php-ext-install pdo pdo_pgsql &&
-      apache2-foreground "
-      
+
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: empresa_pgadmin
-    restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.comman
       PGADMIN_DEFAULT_PASSWORD: admin123
