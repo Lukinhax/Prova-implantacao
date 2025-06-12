@@ -11,8 +11,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data:rw
-      - ./sql.sql:/docker-entrypoint-initdb.d/sql.sql
+      - postgres_data:/var/lib/postgresql/data
+      - sql.sql:/docker-entrypoint-initdb.d/sql.sql
     networks:
       - empresa_networks
     command:
