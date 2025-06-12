@@ -12,7 +12,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - .:/docker-entrypoint-initdb.d/sql.sql
+      - ./:/docker-entrypoint-initdb.d/sql.sql
     networks:
       - empresa_networks
     command:
@@ -45,3 +45,25 @@ services:
       docker -php-ext-install pdo pdo_pgsql &&
       apache2-foreground
       "
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: empresa_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.comman
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+    networks:
+      - empresa_networks
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+      postgres_data:
+      pgadmin_data:
+networks:
+  empresa_networks:
+      driver: bridge
