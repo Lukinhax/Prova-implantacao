@@ -37,12 +37,15 @@ services:
       DB_USER: postgres
       DB_PASS: postgres123
       DB_HOST: db
+      command:
+        RUN chown -R www-data:www-data /var/www/html
+        RUN chmod -R 755 /var/www/html
 
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: empresa_pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.comman
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin123
     ports:
       - "8080:80"
