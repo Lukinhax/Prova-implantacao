@@ -43,8 +43,8 @@ services:
       apt -get update &&
       apt -get install -y bilepq -dev &&
       docker -php-ext-install pdo pdo_pgsql &&
-      apache2-foreground
-      "
+      apache2-foreground "
+      
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: empresa_pgadmin
