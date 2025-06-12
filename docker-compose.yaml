@@ -1,5 +1,5 @@
 services:
-  postegres:
+  postgres:
     image: postgres:15
     container_name: empresa_postgres
     restart: always
